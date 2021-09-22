@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1632315603 source:c:\users\thinkpad\documents\learningc\tp\thecprogramming\gestion_biblio\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1632328251 source:c:\gestion_biblio\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
