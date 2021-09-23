@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
+ typedef struct livre_classe{
+char titre[40];
+double note;;
+}livre_classe;
 
 
 int interface_une(){
@@ -18,6 +23,70 @@ scanf("%d",&reposnse);
 return reposnse;
 }
 
+struct livre_classe* les_3_mieuxnotes()
+{
+
+   FILE* fp = fopen("C:\\Gestion_biblio\\donnees\\livres.csv", "r");
+   char buffer[200];
+   double nt;
+   char *eptr;
+struct livre_classe *lv=(struct livre_classe*)malloc(sizeof(struct livre_classe) * 100);
+
+    if (!fp)
+        printf("Can't open file\n");
+
+    else {
+            printf("*********************************************\n");
+
+            printf("     Les titres des livres Disponibles\n");
+
+            printf("*********************************************\n");
+            printf("\n\n");
+        char buffer[1024];
+
+        int row = 0;
+        int column = 0;
+        int i=0;
+        while (fgets(buffer,
+                     1024, fp)) {
+            column = 0;
+            row++;
+
+            // To avoid printing of column
+            // names in file can be changed
+            // according to need
+            if (row == 1)
+                continue;
+
+            // Splitting the data
+            char* value = strtok(buffer, ", ");
+            while (value) {
+                // Column 1
+                if (column == 0) {
+                  strcpy(lv[i].titre,value);
+                }
+
+
+                if(column==4)
+                {
+                    nt=strtod(value,&eptr);
+                    lv[i].note=nt;
+                }
+
+                value = strtok(NULL, ", ");
+                column++;
+
+            }
+            i++;
+              printf("\n");
+        }
+        printf("\n\n");
+
+
+   }
+    return lv;
+
+}
 
 bool Check_etud(char* code)
 {
@@ -86,7 +155,16 @@ void espace_etudiant()
             scanf("%s",cin);
             if(Check_etud(cin))
         {
-            printf("success");
+            int choix = menu_etud();
+
+            switch(choix){
+        case 1:
+            afficher_livres();
+            break;
+        case 2:
+            afficher_3_mieux_notee();
+            break;
+            }
         }
     else{
             do{
@@ -94,15 +172,122 @@ void espace_etudiant()
         scanf("%s",cin);
             }
             while(Check_etud(cin)==false);
-         printf("success");
+         int choix = menu_etud();
+
+            switch(choix){
+        case 1:
+            afficher_livres();
+            break;
+        case 2:
+            afficher_3_mieux_notee();
+            break;
+            }
     }
   }
 }
 
 
+int menu_etud()
+{
+int choix;
+    printf("***************************************\n***************************************\n");
+    printf("\tECOLE MAROCAINE\n\tDE SCIENCES DE L'INGENIEUR\n");
+    printf("***************************************\n***************************************\n");
+    printf("\n\n\n");
+    printf("\t*****************************************************\n");
+    printf("\t\t                 Menu\n");
+    printf("\t*****************************************************\n");
+    printf("1- afficher tous les livres par classement\n2- voire les 3 livres les mieux notes pour chaque type\n3- voir les 3 livres les plus cherches pour chaque type\n");
+    printf("4- chercher un livre\n5- demander un livre qui n'existe pas\n6- donner une note a un livre que vous avez lu\n7- Quitter");
+    printf("\nsaisissez votre choix:");
+    scanf("%d",&choix);
+    return choix;
+}
+
+void afficher_livres(){
+   FILE* fp = fopen("C:\\Gestion_biblio\\donnees\\livres.csv", "r");
+   char buffer[200];
+
+    if (!fp)
+        printf("Can't open file\n");
+
+    else {
+            printf("*********************************************\n");
+
+            printf("     Les titres des livres Disponibles\n");
+            printf("*********************************************\n");
+            printf("\n\n");
+        char buffer[1024];
+
+        int row = 0;
+        int column = 0;
+
+        while (fgets(buffer,
+                     1024, fp)) {
+            column = 0;
+            row++;
+
+            // To avoid printing of column
+            // names in file can be changed
+            // according to need
+            if (row == 1)
+                continue;
+
+            // Splitting the data
+            char* value = strtok(buffer, ", ");
+            while (value) {
+                // Column 1
+                if (column == 0) {
+                   printf("\ttitre:");
+                }
+                if(column == 1)
+                {
+                    printf("\tauteur:");
+                }
+                 if(column == 2)
+                {
+                    printf("\ttype:");
+                }
+                printf("%s", value);
+                value = strtok(NULL, ", ");
+                column++;
+
+            }
+              printf("\n");
+        }
+        printf("\n\n");
 
 
+   }
+}
+int compare (const void * a, const void * b)
+{
 
+  livre_classe *orderA = (livre_classe *)a;
+  livre_classe *orderB = (livre_classe *)b;
+
+  return ( orderB->note - orderA->note );
+}
+void trier(struct livre_classe* lv,int n)
+{
+  qsort(lv,n,sizeof(livre_classe),compare);
+  printf("************************************************************\n");
+  printf("               Les livres les plus Notes:\n");
+  printf("************************************************************\n");
+  printf("\n\n");
+   for(int i=0;i<3;i++)
+   {
+       printf("\t%s\n\n",lv[i].titre,lv[i].note);
+
+   }
+}
+void afficher_3_mieux_notee()
+{
+   struct livre_classe* lv = les_3_mieuxnotes();
+
+    trier(lv,4);
+
+}
 int main()
 {
 
@@ -115,7 +300,6 @@ case 2:
     espace_etudiant();
     break;
     }
-
 
 
     return 0;
