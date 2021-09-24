@@ -7,6 +7,14 @@
 char titre[40];
 double note;;
 }livre_classe;
+/*
+ typedef struct livre{
+ char titre[40];
+ char auteur[20];
+ char genre[15];
+
+ };*/
+
 
 
 int interface_une(){
@@ -26,7 +34,7 @@ return reposnse;
 struct livre_classe* les_3_mieuxnotes()
 {
 
-   FILE* fp = fopen("C:\\Gestion_biblio\\donnees\\livres.csv", "r");
+   FILE* fp = fopen(".\\donnees\\livres.csv", "r");
    char buffer[200];
    double nt;
    char *eptr;
@@ -90,7 +98,7 @@ struct livre_classe *lv=(struct livre_classe*)malloc(sizeof(struct livre_classe)
 
 bool Check_etud(char* code)
 {
-   FILE* fp = fopen("C:\\Gestion_biblio\\donnees\\etudiants.csv", "r");
+   FILE* fp = fopen(".\\donnees\\etudiants.csv", "r");
 
     if (!fp)
         printf("Can't open file\n");
@@ -142,8 +150,12 @@ value = strtok(NULL, ", ");
 void espace_etudiant()
 {
     int resp;
-    char cin[20];
+    char cin[9],nom[20],prenom[20];
+    int cin_v=0;
 
+
+
+    system("cls");
     printf("\n\n*********************************************\n");
     printf("ECOLE MAROCAINE DES SCIENCES DE L'INGENIEUR\nESPACE ETUDIANT\n Gestion de bibliotheque\n");
     printf("*****************************************************\n\n");
@@ -166,12 +178,38 @@ void espace_etudiant()
             break;
             }
         }
+    }
+
+
     else{
-            do{
+
+        printf("veuillez saisir votre nom:");
+        scanf("%s",nom);
+        printf("veuillez saisir votre prenom:");
+        scanf("%s",prenom);
+
+        do{
         printf("veuillez saisir un CIN valide:");
         scanf("%s",cin);
-            }
-            while(Check_etud(cin)==false);
+
+
+
+// validation de cin
+
+        while (cin[cin_v] != '\0'){
+            cin_v++;
+
+        }
+         }while(cin_v!=8);
+
+
+// hna khass fonction li ghatzid lina hada li t9iyd f'table dial li m9iydin
+
+        printf("inscription validee \n nom: %s \n prenom: %s \n cin: %s \n",nom,prenom,cin);
+
+ system("pause");
+
+
          int choix = menu_etud();
 
             switch(choix){
@@ -182,13 +220,15 @@ void espace_etudiant()
             afficher_3_mieux_notee();
             break;
             }
-    }
-  }
+
+
+}
 }
 
 
 int menu_etud()
 {
+    system("cls");
 int choix;
     printf("***************************************\n***************************************\n");
     printf("\tECOLE MAROCAINE\n\tDE SCIENCES DE L'INGENIEUR\n");
