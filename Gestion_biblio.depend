@@ -9,9 +9,18 @@
 	<stdbool.h>
 	<string.h>
 
-1632486773 source:d:\2021\etude\nouveau dossier\gestion_bibliotheque\main.c
+1632494162 source:d:\2021\etude\nouveau dossier\gestion_bibliotheque\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<string.h>
+	"fonctions.c"
+	"header.h"
+
+1632494184 d:\2021\etude\nouveau dossier\gestion_bibliotheque\fonctions.c
+	<stdio.h>
+	<stdlib.h>
+	"header.h"
+
+1632494102 d:\2021\etude\nouveau dossier\gestion_bibliotheque\header.h
 
