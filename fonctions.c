@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "header.h"
 
-
 int interface_une(){
     int reposnse;
     printf("\n\n\n");
@@ -231,7 +230,7 @@ int choix;
 }
 
 void afficher_livres(){
-   FILE* fp = fopen("C:\\Gestion_biblio\\donnees\\livres.csv", "r");
+   FILE* fp = fopen(".\\donnees\\livres.csv", "r");
    char buffer[200];
 
     if (!fp)
@@ -314,4 +313,5 @@ void afficher_3_mieux_notee()
     trier(lv,4);
 
 }
+
 
